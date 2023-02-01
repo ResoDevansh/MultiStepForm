@@ -1,4 +1,11 @@
+@font-face {
+  font-family: Ubuntu-Regular;
+  src: url('./assets/fonts/Ubuntu-Regular.ttf');
+}
 body {
   margin: 0px;
   background-color: hsla(206, 94%, 87%,.5);
+}
+*{
+  font-family: Ubuntu-Regular;    
 }

@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useEffect, useState } from "react";
 import styled from "styled-components";
 import pic from "./assets/images/bg-sidebar-desktop.svg";
 
-function App() {
+const App = () => {
+  const [index, setIndex] = useState(0);
   const navitems = [
     {
       step: "Step 1",
@@ -21,19 +22,32 @@ function App() {
       value: "Summary",
     },
   ];
+  useEffect(() => {
+    console.log(index);
+  }, [index]);
   return (
     <Container>
       <Navbar imgUrl={pic}>
-        {navitems.map((item) => {
-          return <>
-            <Heading>{item.step}</Heading>
-            <Content>{item.value}</Content>
-          </>;
+        {navitems.map((item, key) => {
+          return (
+            <>
+              <Index
+                key={key}
+                onClick={() => {
+                  setIndex(key + 1);
+                }}
+              >
+                {key + 1}
+              </Index>
+              <Heading>{item.step}</Heading>
+              <Content>{item.value}</Content>
+            </>
+          );
         })}
       </Navbar>
     </Container>
   );
-}
+};
 
 const Container = styled.div`
   height: 70.5vh;
@@ -43,6 +57,7 @@ const Container = styled.div`
   border-radius: 1em;
   background-color: white;
   overflow: hidden;
+  font-size: 0.9em;
 `;
 
 const Navbar = styled.div`
@@ -51,16 +66,38 @@ const Navbar = styled.div`
   background-repeat: no-repeat;
   background-position: 100% 100%;
   height: 66.7vh;
-  width: 16.7vw;
+  width: 15.5vw;
   border-radius: 1em;
   margin-top: calc((3.6vh) / 2);
   margin-left: 0.8em;
+  color: #ffffff;
+  text-transform: uppercase;
 `;
 
 const Heading = styled.div`
-  border: 1px solid red;
+  // border: 1px solid red;
+  color: hsl(231, 11%, 63%);
+  text-indent: 5.5em;
+  letter-spacing: 0.005em;
+  font-size: 0.9em;
 `;
 const Content = styled.div`
-  border: 1px solid green;
+  // border: 1px solid white;
+  text-indent: 5em;
+  letter-spacing: 0.1em;
+  font-weight: bolder;
+`;
+const Index = styled.button`
+  border: 1px solid white;
+  display: inline-block;
+  border-radius: 50%;
+  height: 2em;
+  width: 2em;
+  text-align: center;
+  padding-top: 0.3em;
+  box-sizing: border-box;
+  position: relative;
+  top: 7%;
+  left: 10%;
 `;
 export default App;
