@@ -1,9 +1,11 @@
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import pic from "./assets/images/bg-sidebar-desktop.svg";
+import PersonalInfo from "./components/Personalnfo";
 
 const App = () => {
   const [index, setIndex] = useState(0);
+  const [isClicked, setIsClicked] = useState(Array(4).fill(false));
   const navitems = [
     {
       step: "Step 1",
@@ -22,29 +24,41 @@ const App = () => {
       value: "Summary",
     },
   ];
-  useEffect(() => {
-    console.log(index);
-  }, [index]);
+  // useEffect(() => {
+  //   console.log(index);
+  // }, [index]);
+
   return (
     <Container>
       <Navbar imgUrl={pic}>
         {navitems.map((item, key) => {
           return (
             <>
-              <Index
-                key={key}
-                onClick={() => {
-                  setIndex(key + 1);
-                }}
-              >
-                {key + 1}
-              </Index>
+              {isClicked[key] ? (
+                <ActiveItem>{key + 1}</ActiveItem>
+              ) : (
+                <Index
+                  key={key}
+                  onClick={() => {
+                    setIndex(key + 1);
+                    const activeItem = isClicked.slice();
+                    for (let k = 0; k < activeItem.length; k++) {
+                      activeItem[k] = false;
+                    }
+                    activeItem[key] = true;
+                    setIsClicked(activeItem);
+                  }}
+                >
+                  {key + 1}
+                </Index>
+              )}
               <Heading>{item.step}</Heading>
               <Content>{item.value}</Content>
             </>
           );
         })}
       </Navbar>
+      <PersonalInfo/>
     </Container>
   );
 };
@@ -75,14 +89,12 @@ const Navbar = styled.div`
 `;
 
 const Heading = styled.div`
-  // border: 1px solid red;
   color: hsl(231, 11%, 63%);
   text-indent: 5.5em;
   letter-spacing: 0.005em;
   font-size: 0.9em;
 `;
 const Content = styled.div`
-  // border: 1px solid white;
   text-indent: 5em;
   letter-spacing: 0.1em;
   font-weight: bolder;
@@ -91,13 +103,22 @@ const Index = styled.button`
   border: 1px solid white;
   display: inline-block;
   border-radius: 50%;
+  cursor: pointer;
   height: 2em;
   width: 2em;
   text-align: center;
-  padding-top: 0.3em;
+  padding-top: 0.2em;
   box-sizing: border-box;
   position: relative;
   top: 7%;
   left: 10%;
+  background-color: rgba(255, 255, 255, 0);
+  color: #ffffff;
+`;
+const ActiveItem = styled(Index)`
+  background-color: hsl(228, 100%, 84%);
+  color: black;
+  border: none;
+  cursor: initial;
 `;
 export default App;
