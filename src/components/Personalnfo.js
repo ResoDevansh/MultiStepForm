@@ -1,7 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const PersonalInfo = () => {
+  const [person, setPerson] = useState({ name: "", email: "", phone: "" });
+  const [people, setPeople] = useState([]);
+  let isPresent = Array.fill(true,3);
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setPerson({
+      ...person,
+      [name]: value,
+      id: new Date().getTime().toString(),
+    });
+  };
+  const handleClick = (e) => {
+    e.preventDefault();
+    if (person.name && person.email && person.phone) {
+      setPeople([...people, person]);
+      setPerson({ name: "", email: "", phone: "" });
+    }
+    else {
+      if (person.name === '') {
+        isPresent[0] = false;
+      }
+      if (person.email === '') {
+        isPresent[1] = false;
+      }
+      if (person.phone === '') {
+        isPresent[2] = false;
+      }
+    }
+  };
   return (
     <Container>
       <Heading>Personal info</Heading>
@@ -9,13 +39,36 @@ const PersonalInfo = () => {
         Please provide your name, email address, and phone number.
       </Subtitle>
       <form>
-        <label for="name">Name</label>
-        <input type="text" placeholder="e.g. Stephen King" id="name"></input>
-        <label for="email">Email Address</label>
-        <input type="email" placeholder="e.g. stephenking@lorem.com" id="email"></input>
-        <label for="phone-no">Phone Number</label>
-        <input type="number" placeholder="e.g. +1 234 567 890" id="phone-no"></input>
-        <submit>Next Step</submit>
+        <label htmlFor="name">Name</label>
+        <input
+          type="text"
+          placeholder="e.g. Stephen King"
+          id="name"
+          name="name"
+          value={person.name}
+          onChange={handleChange}
+        ></input>
+        <label htmlFor="email">Email Address</label>
+        <input
+          type="email"
+          placeholder="e.g. stephenking@lorem.com"
+          id="email"
+          name="email"
+          value={person.email}
+          onChange={handleChange}
+        ></input>
+        <label htmlFor="phone-no">Phone Number</label>
+        <input
+          type="number"
+          placeholder="e.g. +1 234 567 890"
+          id="phone-no"
+          name="phone"
+          value={person.phone}
+          onChange={handleChange}
+        ></input>
+        <button type="submit" onClick={handleClick}>
+          Next Step
+        </button>
       </form>
     </Container>
   );
@@ -55,8 +108,10 @@ const Container = styled.div`
     width: 65%;
   }
 
-  submit {
+  button {
     padding: 2.5%;
+    padding-left: 4%;
+    padding-right: 4%;
     display: inline-block;
     background-color: hsl(213, 96%, 18%);
     color: hsl(231, 100%, 99%);
@@ -64,7 +119,6 @@ const Container = styled.div`
     top: 3em;
     left: 28em;
     border-radius: 0.6em;
-    width: 15%;
     text-align: center;
     cursor: pointer;
   }
