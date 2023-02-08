@@ -4,7 +4,7 @@ import styled from "styled-components";
 const PersonalInfo = () => {
   const [person, setPerson] = useState({ name: "", email: "", phone: "" });
   const [people, setPeople] = useState([]);
-  let isPresent = Array.fill(true,3);
+  const [isPresent, setIsPresent] = useState(Array(3).fill(true));
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -13,23 +13,55 @@ const PersonalInfo = () => {
       [name]: value,
       id: new Date().getTime().toString(),
     });
+    if (name === 'name') {
+      document.getElementById('name').style.borderColor = 'rgba(5,10,10,.2)';
+      console.log('name being written');
+    }
+    else if (name === 'email')
+      document.getElementById('email').style.borderColor = 'rgba(5,10,10,.2)';
+    else if (name === 'phone')
+      document.getElementById('phone').style.borderColor = 'rgba(5,10,10,.2)';
   };
   const handleClick = (e) => {
     e.preventDefault();
+    setIsPresent(Array(3).fill(true));
     if (person.name && person.email && person.phone) {
       setPeople([...people, person]);
       setPerson({ name: "", email: "", phone: "" });
+      document.getElementById('name').style.borderColor = 'rgba(5,10,10,.2)';
+      document.getElementById('email').style.borderColor = 'rgba(5,10,10,.2)';
+      document.getElementById('phone').style.borderColor = 'rgba(5,10,10,.2)';
     }
     else {
+      let newArr=Array(3).fill(true);
       if (person.name === '') {
-        isPresent[0] = false;
+        // const newArr = isPresent.slice();
+        newArr[0] = false;
+        // setIsPresent(newArr);
+        document.getElementById('name').style.borderColor = 'red';
+      }
+      else {
+        document.getElementById('name').style.borderColor = 'rgba(5,10,10,.2)';
       }
       if (person.email === '') {
-        isPresent[1] = false;
+        // const newArr = isPresent.slice();
+        newArr[1] = false;
+        // setIsPresent(newArr);
+        document.getElementById('email').style.borderColor = 'red';
+      }
+      else {
+        document.getElementById('email').style.borderColor = 'rgba(5,10,10,.2)';
       }
       if (person.phone === '') {
-        isPresent[2] = false;
+        // const newArr = isPresent.slice();
+        newArr[2] = false;
+        // setIsPresent(newArr);
+        document.getElementById('phone').style.borderColor = 'red';
       }
+      else {
+        document.getElementById('phone').style.borderColor = 'rgba(5,10,10,.2)';
+      }
+      setIsPresent(newArr);
     }
   };
   return (
@@ -40,6 +72,7 @@ const PersonalInfo = () => {
       </Subtitle>
       <form>
         <label htmlFor="name">Name</label>
+        {isPresent[0]===false?<DialogBox present={true}>This field is required</DialogBox>:<Invisible></Invisible>}
         <input
           type="text"
           placeholder="e.g. Stephen King"
@@ -49,6 +82,7 @@ const PersonalInfo = () => {
           onChange={handleChange}
         ></input>
         <label htmlFor="email">Email Address</label>
+        {isPresent[1] === false ? <DialogBox present={true}>This field is required</DialogBox>:<Invisible></Invisible>}
         <input
           type="email"
           placeholder="e.g. stephenking@lorem.com"
@@ -58,10 +92,11 @@ const PersonalInfo = () => {
           onChange={handleChange}
         ></input>
         <label htmlFor="phone-no">Phone Number</label>
+        {isPresent[2]===false?<DialogBox present={true}>This field is required</DialogBox>:<Invisible></Invisible>}
         <input
           type="number"
           placeholder="e.g. +1 234 567 890"
-          id="phone-no"
+          id="phone"
           name="phone"
           value={person.phone}
           onChange={handleChange}
@@ -101,11 +136,16 @@ const Container = styled.div`
   }
 
   input {
+    cursor: pointer;
     padding: 0.8em;
     margin-left: 20%;
     margin-top: 2%;
     display: inline-block;
     width: 65%;
+    border-radius: .5em;
+    // background-color: white;
+    border-color: rgba(5,10,10,.2);
+    border-style: solid;
   }
 
   button {
@@ -122,5 +162,17 @@ const Container = styled.div`
     text-align: center;
     cursor: pointer;
   }
+`;
+const DialogBox = styled.div`
+  color: red;
+  font-size: .9em;
+  text-align: end;
+  width: 40%;
+  position: relative;
+  top: -1.3em;
+  left: 22em;
+  margin-bottom: -2.5%;
+`;
+const Invisible = styled.div`
 `;
 export default PersonalInfo;
