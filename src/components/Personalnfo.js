@@ -13,14 +13,13 @@ const PersonalInfo = () => {
       [name]: value,
       id: new Date().getTime().toString(),
     });
-    if (name === 'name') {
-      document.getElementById('name').style.borderColor = 'rgba(5,10,10,.2)';
-      console.log('name being written');
-    }
-    else if (name === 'email')
-      document.getElementById('email').style.borderColor = 'rgba(5,10,10,.2)';
-    else if (name === 'phone')
-      document.getElementById('phone').style.borderColor = 'rgba(5,10,10,.2)';
+    if (name === "name") {
+      document.getElementById("name").style.borderColor = "rgba(5,10,10,.2)";
+      console.log("name being written");
+    } else if (name === "email")
+      document.getElementById("email").style.borderColor = "rgba(5,10,10,.2)";
+    else if (name === "phone")
+      document.getElementById("phone").style.borderColor = "rgba(5,10,10,.2)";
   };
   const handleClick = (e) => {
     e.preventDefault();
@@ -28,38 +27,28 @@ const PersonalInfo = () => {
     if (person.name && person.email && person.phone) {
       setPeople([...people, person]);
       setPerson({ name: "", email: "", phone: "" });
-      document.getElementById('name').style.borderColor = 'rgba(5,10,10,.2)';
-      document.getElementById('email').style.borderColor = 'rgba(5,10,10,.2)';
-      document.getElementById('phone').style.borderColor = 'rgba(5,10,10,.2)';
-    }
-    else {
-      let newArr=Array(3).fill(true);
-      if (person.name === '') {
-        // const newArr = isPresent.slice();
+      document.getElementById("name").style.borderColor = "rgba(5,10,10,.2)";
+      document.getElementById("email").style.borderColor = "rgba(5,10,10,.2)";
+      document.getElementById("phone").style.borderColor = "rgba(5,10,10,.2)";
+    } else {
+      let newArr = Array(3).fill(true);
+      if (person.name === "") {
         newArr[0] = false;
-        // setIsPresent(newArr);
-        document.getElementById('name').style.borderColor = 'red';
+        document.getElementById("name").style.borderColor = "red";
+      } else {
+        document.getElementById("name").style.borderColor = "rgba(5,10,10,.2)";
       }
-      else {
-        document.getElementById('name').style.borderColor = 'rgba(5,10,10,.2)';
-      }
-      if (person.email === '') {
-        // const newArr = isPresent.slice();
+      if (person.email === "") {
         newArr[1] = false;
-        // setIsPresent(newArr);
-        document.getElementById('email').style.borderColor = 'red';
+        document.getElementById("email").style.borderColor = "red";
+      } else {
+        document.getElementById("email").style.borderColor = "rgba(5,10,10,.2)";
       }
-      else {
-        document.getElementById('email').style.borderColor = 'rgba(5,10,10,.2)';
-      }
-      if (person.phone === '') {
-        // const newArr = isPresent.slice();
+      if (person.phone === "") {
         newArr[2] = false;
-        // setIsPresent(newArr);
-        document.getElementById('phone').style.borderColor = 'red';
-      }
-      else {
-        document.getElementById('phone').style.borderColor = 'rgba(5,10,10,.2)';
+        document.getElementById("phone").style.borderColor = "red";
+      } else {
+        document.getElementById("phone").style.borderColor = "rgba(5,10,10,.2)";
       }
       setIsPresent(newArr);
     }
@@ -72,7 +61,11 @@ const PersonalInfo = () => {
       </Subtitle>
       <form>
         <label htmlFor="name">Name</label>
-        {isPresent[0]===false?<DialogBox present={true}>This field is required</DialogBox>:<Invisible></Invisible>}
+        {isPresent[0] === false ? (
+          <DialogBox present={true}>This field is required</DialogBox>
+        ) : (
+          <Invisible></Invisible>
+        )}
         <input
           type="text"
           placeholder="e.g. Stephen King"
@@ -82,7 +75,11 @@ const PersonalInfo = () => {
           onChange={handleChange}
         ></input>
         <label htmlFor="email">Email Address</label>
-        {isPresent[1] === false ? <DialogBox present={true}>This field is required</DialogBox>:<Invisible></Invisible>}
+        {isPresent[1] === false ? (
+          <DialogBox present={true}>This field is required</DialogBox>
+        ) : (
+          <Invisible></Invisible>
+        )}
         <input
           type="email"
           placeholder="e.g. stephenking@lorem.com"
@@ -92,7 +89,11 @@ const PersonalInfo = () => {
           onChange={handleChange}
         ></input>
         <label htmlFor="phone-no">Phone Number</label>
-        {isPresent[2]===false?<DialogBox present={true}>This field is required</DialogBox>:<Invisible></Invisible>}
+        {isPresent[2] === false ? (
+          <DialogBox present={true}>This field is required</DialogBox>
+        ) : (
+          <Invisible></Invisible>
+        )}
         <input
           type="number"
           placeholder="e.g. +1 234 567 890"
@@ -142,9 +143,9 @@ const Container = styled.div`
     margin-top: 2%;
     display: inline-block;
     width: 65%;
-    border-radius: .5em;
+    border-radius: 0.5em;
     // background-color: white;
-    border-color: rgba(5,10,10,.2);
+    border-color: rgba(5, 10, 10, 0.2);
     border-style: solid;
   }
 
@@ -165,7 +166,7 @@ const Container = styled.div`
 `;
 const DialogBox = styled.div`
   color: red;
-  font-size: .9em;
+  font-size: 0.9em;
   text-align: end;
   width: 40%;
   position: relative;
@@ -173,6 +174,5 @@ const DialogBox = styled.div`
   left: 22em;
   margin-bottom: -2.5%;
 `;
-const Invisible = styled.div`
-`;
+const Invisible = styled.div``;
 export default PersonalInfo;

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import pic from "./assets/images/bg-sidebar-desktop.svg";
 import PersonalInfo from "./components/Personalnfo";
+import SelectYourPlan from "./components/SelectYourPlan";
 
 const App = () => {
   const [index, setIndex] = useState(0);
@@ -58,7 +59,14 @@ const App = () => {
           );
         })}
       </Navbar>
-      <PersonalInfo/>
+      {(() => {
+        switch (index) {
+        case 1: return <PersonalInfo />
+          case 2: return <SelectYourPlan />
+          default: return <PersonalInfo/>
+      }
+      })()}
+      {/* {isClicked[0]?<PersonalInfo />} */}
     </Container>
   );
 };
