@@ -102,8 +102,8 @@ const Left = styled.div`
   top: 2.6vh;
   left: 9vw;
   width: fit-content;
-  // border: 1px solid red;
   text-indent: 0;
+  color: hsl(231, 11%, 63%);
 `;
 const Right = styled.div`
   position: relative;
@@ -111,7 +111,7 @@ const Right = styled.div`
   left: 17vw;
   width: fit-content;
   text-indent: 0;
-  // border: 1px solid red;
+  color: hsl(231, 11%, 63%);
 `;
 const Switch = styled.div`
   border: 1px solid black;
