@@ -1,10 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import arcade from "../assets/images/icon-arcade.svg";
 import advanced from "../assets/images/icon-advanced.svg";
 import pro from "../assets/images/icon-pro.svg";
 
 const SelectYourPlan = () => {
+  const [toggle, setToggle] = useState(0);
+  useEffect(() => {
+    // console.log("UseEffect "+toggle);
+    if (toggle === 0) {
+      document.getElementsByClassName("ball")[0].style.marginLeft = "0vw";
+      document.getElementById("left").style.color = "hsl(213, 96%, 18%)";
+      document.getElementById("right").style.color = "hsl(231, 11%, 63%)";
+    }
+    else {
+      document.getElementsByClassName("ball")[0].style.marginLeft = "1vw";
+      document.getElementById("right").style.color = "hsl(213, 96%, 18%)";
+      document.getElementById("left").style.color = "hsl(231, 11%, 63%)";
+    }
+  }, [toggle]); 
+  const handleClick = () => {
+    if (toggle === 0) {
+      setToggle(1);
+    } else {
+      setToggle(0);
+    }
+  };
   return (
     <Container>
       <h1> Select your plan</h1>
@@ -18,17 +39,16 @@ const SelectYourPlan = () => {
           <Price>$12/mo</Price>{" "}
         </Advanced>
         <Pro imgUrl={pro}>
-          {/* {" "} */}
           <Title>Pro</Title>
           <Price>$15/mo</Price>{" "}
         </Pro>
       </Flex>
       <SwitchBar>
-        <Left>Monthly</Left>
-        <Switch>
-          <Ball></Ball>
+        <Left id="left">Monthly</Left>
+        <Switch onClick={handleClick}>
+          <Ball className="ball"></Ball>
         </Switch>
-        <Right>Yearly</Right>
+        <Right id="right">Yearly</Right>
       </SwitchBar>
       <GoBack>Go Back</GoBack>
       <Next>Next Step</Next>
@@ -66,7 +86,7 @@ const Arcade = styled.div`
   &:hover {
     border: 1px solid hsl(243, 100%, 62%);
     cursor: pointer;
-    background-color:  hsla(228, 100%, 84%,0.1);
+    background-color: hsla(228, 100%, 84%, 0.1);
   }
 `;
 const Advanced = styled(Arcade)``;
@@ -103,7 +123,7 @@ const Left = styled.div`
   left: 9vw;
   width: fit-content;
   text-indent: 0;
-  color: hsl(231, 11%, 63%);
+  color: hsl(213, 96%, 18%);
 `;
 const Right = styled.div`
   position: relative;
@@ -111,6 +131,7 @@ const Right = styled.div`
   left: 17vw;
   width: fit-content;
   text-indent: 0;
+  // color: hsl(213, 96%, 18%);
   color: hsl(231, 11%, 63%);
 `;
 const Switch = styled.div`
@@ -120,9 +141,9 @@ const Switch = styled.div`
   border-radius: 1em;
   margin-left: 45%;
   background-color: hsl(213, 96%, 18%);
-  &:hover{
-  cursor: pointer;
-  // background-color: #ffffff;
+  &:hover {
+    cursor: pointer;
+    // background-color: #ffffff;
   }
 `;
 const Ball = styled.div`
@@ -132,6 +153,7 @@ const Ball = styled.div`
   height: 0.75vw;
   border-radius: 100%;
   border: 1px solid white;
+  transition: all 0.275ms cubic-bezier(0.25, 0.46, 0.45, 0.8);
 `;
 const GoBack = styled.div`
   // border: 1px solid red;
@@ -139,7 +161,7 @@ const GoBack = styled.div`
   margin-top: 12vh;
   color: hsl(231, 11%, 63%);
   font-weight: 500;
-  &:hover{
+  &:hover {
     color: hsl(213, 96%, 18%);
     cursor: pointer;
     font-weight: 900;
@@ -157,7 +179,7 @@ const Next = styled.div`
   font-weight: 400;
   background-color: hsl(213, 96%, 18%);
   color: white;
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
 `;
