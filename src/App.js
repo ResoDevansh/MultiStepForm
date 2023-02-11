@@ -61,10 +61,13 @@ const App = () => {
       </Navbar>
       {(() => {
         switch (index) {
-        case 1: return <PersonalInfo />
-          case 2: return <SelectYourPlan />
-          default: return <PersonalInfo/>
-      }
+          case 1:
+            return <PersonalInfo />;
+          case 2:
+            return <SelectYourPlan />;
+          default:
+            return <PersonalInfo />;
+        }
       })()}
       {/* {isClicked[0]?<PersonalInfo />} */}
     </Container>
