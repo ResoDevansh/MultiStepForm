@@ -8,45 +8,52 @@ const SelectYourPlan = () => {
   const [toggle, setToggle] = useState(0);
   const [init, setInit] = useState(true);
   useEffect(() => {
-    // console.log("UseEffect "+toggle);
     console.log(toggle);
     if (toggle === 0) {
-      document.getElementsByClassName('ball')[0].style.marginLeft = "0vw";
-      document.getElementById('left').style.color = "hsl(213, 96%, 18%)";
-      document.getElementById('right').style.color = "hsl(231, 11%, 63%)";
-      document.getElementsByClassName('arcade')[0].lastElementChild.textContent = "$9/year";
-      document.getElementsByClassName('advanced')[0].lastElementChild.textContent = "$12/year";
-      document.getElementsByClassName('pro')[0].lastElementChild.textContent = "$15/year";
+      document.getElementsByClassName("ball")[0].style.marginLeft = "0vw";
+      document.getElementById("left").style.color = "hsl(213, 96%, 18%)";
+      document.getElementById("right").style.color = "hsl(231, 11%, 63%)";
+
       if (init === false) {
-        document.getElementsByClassName('arcade')[0].removeChild(document.getElementById('arcade-content'));
-        document.getElementsByClassName('advanced')[0].removeChild(document.getElementById('advanced-content'));
-        document.getElementsByClassName('pro')[0].removeChild(document.getElementById('pro-content'));
+        let arcade = document.getElementsByClassName("arcade")[0];
+        let advanced = document.getElementsByClassName("advanced")[0];
+        let pro = document.getElementsByClassName("pro")[0];
+
+        let arcadePrice = document.getElementById("arcadePrice");
+        let advancedPrice = document.getElementById("advancedPrice");
+        let proPrice = document.getElementById("proPrice");
+
+        arcadePrice.textContent = "$9/month";
+        advancedPrice.textContent = "$12/month";
+        proPrice.textContent = "$15/month";
+
+        arcade.removeChild(arcade.lastElementChild);
+        advanced.removeChild(advanced.lastElementChild);
+        pro.removeChild(pro.lastElementChild);
       }
-    }
-    else {
+    } else {
+      let extraContentElement = document.createElement("p");
+      extraContentElement.textContent = "2 months free";
+
+      let arcade = document.getElementsByClassName("arcade")[0];
+      let advanced = document.getElementsByClassName("advanced")[0];
+      let pro = document.getElementsByClassName("pro")[0];
+
+      let arcadePrice = document.getElementById("arcadePrice");
+      let advancedPrice = document.getElementById("advancedPrice");
+      let proPrice = document.getElementById("proPrice");
+
+      arcadePrice.textContent = "$90/year";
+      advancedPrice.textContent = "$120/year";
+      proPrice.textContent = "$150/year";
+
+      arcade.appendChild(extraContentElement.cloneNode(true));
+      advanced.appendChild(extraContentElement.cloneNode(true));
+      pro.appendChild(extraContentElement.cloneNode(true));
+
       document.getElementsByClassName("ball")[0].style.marginLeft = "1vw";
       document.getElementById("right").style.color = "hsl(213, 96%, 18%)";
       document.getElementById("left").style.color = "hsl(231, 11%, 63%)";
-
-      let addData = document.createTextNode("2 months free");
-      let addDataElement = document.createElement("p");
-      addDataElement.appendChild(addData);
-      // console.log(document.getElementById('arcade'));
-      // console.log(document.getElementById('advanced'));
-      // console.log(document.getElementById('pro'));
-      // document.getElementById('arcade').appendChild(addDataElement);
-      // document.getElementById('advanced').appendChild(addDataElement);
-      // document.getElementById('pro').appendChild(addDataElement);
-      document.getElementsByClassName('arcade')[0].lastElementChild.textContent = "$90/year";
-      document.getElementsByClassName('arcade')[0].appendChild(addDataElement);
-      document.getElementsByClassName('arcade')[0].lastElementChild.id = 'arcade-content';
-      document.getElementsByClassName('advanced')[0].lastElementChild.textContent = "$120/year";
-      document.getElementsByClassName('advanced')[0].appendChild(addDataElement);
-      document.getElementsByClassName('advanced')[0].lastElementChild.id = 'advanced-content';
-      document.getElementsByClassName('pro')[0].lastElementChild.textContent = "$150/year";
-      document.getElementsByClassName('pro')[0].appendChild(addDataElement);
-      document.getElementsByClassName('pro')[0].lastElementChild.id = 'pro-content';
-
     }
   }, [toggle]);
   const handleClick = () => {
@@ -63,15 +70,15 @@ const SelectYourPlan = () => {
       <Subtitle>You have the option of monthly or yearly billing.</Subtitle>
       <Flex>
         <Arcade imgUrl={arcade} className="arcade">
-          <Title>Arcade</Title> <Price>$9/mo</Price>
+          <Title>Arcade</Title> <Price id="arcadePrice">$9/mo</Price>
         </Arcade>
         <Advanced imgUrl={advanced} className="advanced">
           <Title>Advanced</Title>
-          <Price>$12/mo</Price>
+          <Price id="advancedPrice">$12/mo</Price>
         </Advanced>
         <Pro imgUrl={pro} className="pro">
           <Title>Pro</Title>
-          <Price>$15/mo</Price>
+          <Price id="proPrice">$15/mo</Price>
         </Pro>
       </Flex>
       <SwitchBar>
@@ -109,7 +116,7 @@ const Arcade = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.2);
   flex-basis: 8vw;
   margin: 0vh 3vh;
-  // height: 20vh;
+  height: 25vh;
   background-position: 2vh 1vw;
   background-repeat: no-repeat;
   background-image: url(${(props) => props.imgUrl});
