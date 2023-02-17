@@ -6,22 +6,53 @@ import pro from "../assets/images/icon-pro.svg";
 
 const SelectYourPlan = () => {
   const [toggle, setToggle] = useState(0);
+  const [init, setInit] = useState(true);
   useEffect(() => {
     // console.log("UseEffect "+toggle);
+    console.log(toggle);
     if (toggle === 0) {
-      document.getElementsByClassName("ball")[0].style.marginLeft = "0vw";
-      document.getElementById("left").style.color = "hsl(213, 96%, 18%)";
-      document.getElementById("right").style.color = "hsl(231, 11%, 63%)";
+      document.getElementsByClassName('ball')[0].style.marginLeft = "0vw";
+      document.getElementById('left').style.color = "hsl(213, 96%, 18%)";
+      document.getElementById('right').style.color = "hsl(231, 11%, 63%)";
+      document.getElementsByClassName('arcade')[0].lastElementChild.textContent = "$9/year";
+      document.getElementsByClassName('advanced')[0].lastElementChild.textContent = "$12/year";
+      document.getElementsByClassName('pro')[0].lastElementChild.textContent = "$15/year";
+      if (init === false) {
+        document.getElementsByClassName('arcade')[0].removeChild(document.getElementById('arcade-content'));
+        document.getElementsByClassName('advanced')[0].removeChild(document.getElementById('advanced-content'));
+        document.getElementsByClassName('pro')[0].removeChild(document.getElementById('pro-content'));
+      }
     }
     else {
       document.getElementsByClassName("ball")[0].style.marginLeft = "1vw";
       document.getElementById("right").style.color = "hsl(213, 96%, 18%)";
       document.getElementById("left").style.color = "hsl(231, 11%, 63%)";
+
+      let addData = document.createTextNode("2 months free");
+      let addDataElement = document.createElement("p");
+      addDataElement.appendChild(addData);
+      // console.log(document.getElementById('arcade'));
+      // console.log(document.getElementById('advanced'));
+      // console.log(document.getElementById('pro'));
+      // document.getElementById('arcade').appendChild(addDataElement);
+      // document.getElementById('advanced').appendChild(addDataElement);
+      // document.getElementById('pro').appendChild(addDataElement);
+      document.getElementsByClassName('arcade')[0].lastElementChild.textContent = "$90/year";
+      document.getElementsByClassName('arcade')[0].appendChild(addDataElement);
+      document.getElementsByClassName('arcade')[0].lastElementChild.id = 'arcade-content';
+      document.getElementsByClassName('advanced')[0].lastElementChild.textContent = "$120/year";
+      document.getElementsByClassName('advanced')[0].appendChild(addDataElement);
+      document.getElementsByClassName('advanced')[0].lastElementChild.id = 'advanced-content';
+      document.getElementsByClassName('pro')[0].lastElementChild.textContent = "$150/year";
+      document.getElementsByClassName('pro')[0].appendChild(addDataElement);
+      document.getElementsByClassName('pro')[0].lastElementChild.id = 'pro-content';
+
     }
-  }, [toggle]); 
+  }, [toggle]);
   const handleClick = () => {
     if (toggle === 0) {
       setToggle(1);
+      setInit(false);
     } else {
       setToggle(0);
     }
@@ -31,16 +62,16 @@ const SelectYourPlan = () => {
       <h1> Select your plan</h1>
       <Subtitle>You have the option of monthly or yearly billing.</Subtitle>
       <Flex>
-        <Arcade imgUrl={arcade}>
+        <Arcade imgUrl={arcade} className="arcade">
           <Title>Arcade</Title> <Price>$9/mo</Price>
         </Arcade>
-        <Advanced imgUrl={advanced}>
+        <Advanced imgUrl={advanced} className="advanced">
           <Title>Advanced</Title>
-          <Price>$12/mo</Price>{" "}
+          <Price>$12/mo</Price>
         </Advanced>
-        <Pro imgUrl={pro}>
+        <Pro imgUrl={pro} className="pro">
           <Title>Pro</Title>
-          <Price>$15/mo</Price>{" "}
+          <Price>$15/mo</Price>
         </Pro>
       </Flex>
       <SwitchBar>
@@ -78,7 +109,7 @@ const Arcade = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.2);
   flex-basis: 8vw;
   margin: 0vh 3vh;
-  height: 20vh;
+  // height: 20vh;
   background-position: 2vh 1vw;
   background-repeat: no-repeat;
   background-image: url(${(props) => props.imgUrl});
