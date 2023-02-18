@@ -9,6 +9,7 @@ const SelectYourPlan = () => {
   const [init, setInit] = useState(true);
   useEffect(() => {
     console.log(toggle);
+    console.log(init);
     if (toggle === 0) {
       document.getElementsByClassName("ball")[0].style.marginLeft = "0vw";
       document.getElementById("left").style.color = "hsl(213, 96%, 18%)";
@@ -50,6 +51,10 @@ const SelectYourPlan = () => {
       arcade.appendChild(extraContentElement.cloneNode(true));
       advanced.appendChild(extraContentElement.cloneNode(true));
       pro.appendChild(extraContentElement.cloneNode(true));
+
+      arcade.lastElementChild.id = "arcade-free";
+      advanced.lastElementChild.id = "advanced-free";
+      pro.lastElementChild.id = "pro-free";
 
       document.getElementsByClassName("ball")[0].style.marginLeft = "1vw";
       document.getElementById("right").style.color = "hsl(213, 96%, 18%)";
@@ -114,6 +119,7 @@ const Subtitle = styled.div`
 
 const Arcade = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.2);
+  // color: hsl(228, 100%, 84%);
   flex-basis: 8vw;
   margin: 0vh 3vh;
   height: 25vh;
@@ -121,14 +127,35 @@ const Arcade = styled.div`
   background-repeat: no-repeat;
   background-image: url(${(props) => props.imgUrl});
   border-radius: 0.8em;
+  font-weight: bolder;
   &:hover {
     border: 1px solid hsl(243, 100%, 62%);
     cursor: pointer;
     background-color: hsla(228, 100%, 84%, 0.1);
   }
+  #arcade-free {
+    margin-left: -0.5em;
+    margin-top: 10px;
+    font-size: 0.9em;
+    color:  hsl(243, 100%, 62%);
+  }
 `;
-const Advanced = styled(Arcade)``;
-const Pro = styled(Arcade)``;
+const Advanced = styled(Arcade)`
+  #advanced-free {
+    margin-left: -0.5em;
+    margin-top: 10px;
+    font-size: 0.9em;
+    color:  hsl(243, 100%, 62%);
+  }
+`;
+const Pro = styled(Arcade)`
+  #pro-free {
+    margin-left: -0.5em;
+    margin-top: 10px;
+    font-size: 0.9em;
+    color:  hsl(243, 100%, 62%);
+  }
+`;
 const Flex = styled.div`
   display: flex;
   justify-content: center;
@@ -144,6 +171,7 @@ const Price = styled.div`
 const Title = styled.div`
   margin-top: 14vh;
   margin-left: -1vh;
+  color:  hsl(243, 100%, 62%);
 `;
 const SwitchBar = styled.div`
   // border: 1px solid blue;
@@ -196,7 +224,7 @@ const Ball = styled.div`
 const GoBack = styled.div`
   // border: 1px solid red;
   width: 5vw;
-  margin-top: 12vh;
+  margin-top: 6vh;
   color: hsl(231, 11%, 63%);
   font-weight: 500;
   &:hover {

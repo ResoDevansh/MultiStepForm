@@ -137,7 +137,7 @@ const Container = styled.div`
   }
 
   input {
-    cursor: pointer;
+    cursor: edit;
     padding: 0.8em;
     margin-left: 20%;
     margin-top: 2%;

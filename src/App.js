@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import pic from "./assets/images/bg-sidebar-desktop.svg";
 import PersonalInfo from "./components/Personalnfo";
 import SelectYourPlan from "./components/SelectYourPlan";
 
 const App = () => {
-  const [index, setIndex] = useState(0);
-  const [isClicked, setIsClicked] = useState(Array(4).fill(false));
+  const [index, setIndex] = useState(1);
   const navitems = [
     {
       step: "Step 1",
@@ -25,9 +24,6 @@ const App = () => {
       value: "Summary",
     },
   ];
-  // useEffect(() => {
-  //   console.log(index);
-  // }, [index]);
 
   return (
     <Container>
@@ -35,19 +31,13 @@ const App = () => {
         {navitems.map((item, key) => {
           return (
             <>
-              {isClicked[key] ? (
+              {key + 1 === index ? (
                 <ActiveItem>{key + 1}</ActiveItem>
               ) : (
                 <Index
                   key={key}
                   onClick={() => {
                     setIndex(key + 1);
-                    const activeItem = isClicked.slice();
-                    for (let k = 0; k < activeItem.length; k++) {
-                      activeItem[k] = false;
-                    }
-                    activeItem[key] = true;
-                    setIsClicked(activeItem);
                   }}
                 >
                   {key + 1}
@@ -69,7 +59,6 @@ const App = () => {
             return <PersonalInfo />;
         }
       })()}
-      {/* {isClicked[0]?<PersonalInfo />} */}
     </Container>
   );
 };
