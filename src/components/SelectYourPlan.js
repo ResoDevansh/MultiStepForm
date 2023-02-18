@@ -4,94 +4,39 @@ import arcade from "../assets/images/icon-arcade.svg";
 import advanced from "../assets/images/icon-advanced.svg";
 import pro from "../assets/images/icon-pro.svg";
 
-const SelectYourPlan = () => {
-  const [toggle, setToggle] = useState(0);
-  const [init, setInit] = useState(true);
-  useEffect(() => {
-    console.log(toggle);
-    console.log(init);
-    if (toggle === 0) {
-      document.getElementsByClassName("ball")[0].style.marginLeft = "0vw";
-      document.getElementById("left").style.color = "hsl(213, 96%, 18%)";
-      document.getElementById("right").style.color = "hsl(231, 11%, 63%)";
-
-      if (init === false) {
-        let arcade = document.getElementsByClassName("arcade")[0];
-        let advanced = document.getElementsByClassName("advanced")[0];
-        let pro = document.getElementsByClassName("pro")[0];
-
-        let arcadePrice = document.getElementById("arcadePrice");
-        let advancedPrice = document.getElementById("advancedPrice");
-        let proPrice = document.getElementById("proPrice");
-
-        arcadePrice.textContent = "$9/month";
-        advancedPrice.textContent = "$12/month";
-        proPrice.textContent = "$15/month";
-
-        arcade.removeChild(arcade.lastElementChild);
-        advanced.removeChild(advanced.lastElementChild);
-        pro.removeChild(pro.lastElementChild);
-      }
-    } else {
-      let extraContentElement = document.createElement("p");
-      extraContentElement.textContent = "2 months free";
-
-      let arcade = document.getElementsByClassName("arcade")[0];
-      let advanced = document.getElementsByClassName("advanced")[0];
-      let pro = document.getElementsByClassName("pro")[0];
-
-      let arcadePrice = document.getElementById("arcadePrice");
-      let advancedPrice = document.getElementById("advancedPrice");
-      let proPrice = document.getElementById("proPrice");
-
-      arcadePrice.textContent = "$90/year";
-      advancedPrice.textContent = "$120/year";
-      proPrice.textContent = "$150/year";
-
-      arcade.appendChild(extraContentElement.cloneNode(true));
-      advanced.appendChild(extraContentElement.cloneNode(true));
-      pro.appendChild(extraContentElement.cloneNode(true));
-
-      arcade.lastElementChild.id = "arcade-free";
-      advanced.lastElementChild.id = "advanced-free";
-      pro.lastElementChild.id = "pro-free";
-
-      document.getElementsByClassName("ball")[0].style.marginLeft = "1vw";
-      document.getElementById("right").style.color = "hsl(213, 96%, 18%)";
-      document.getElementById("left").style.color = "hsl(231, 11%, 63%)";
-    }
-  }, [toggle]);
+const SelectYourPlan = (e) => {
+  const [showYearly, setYearly] = useState(false);
   const handleClick = () => {
-    if (toggle === 0) {
-      setToggle(1);
-      setInit(false);
-    } else {
-      setToggle(0);
-    }
+    setYearly((yearly) => !yearly);
   };
+  // e.preventDefault();
   return (
     <Container>
       <h1> Select your plan</h1>
       <Subtitle>You have the option of monthly or yearly billing.</Subtitle>
       <Flex>
-        <Arcade imgUrl={arcade} className="arcade">
-          <Title>Arcade</Title> <Price id="arcadePrice">$9/mo</Price>
+        <Arcade imgUrl={arcade}>
+          <Title>Arcade</Title>{" "}
+          <Price>{showYearly ? "$90/year" : "$9/month"}</Price>
+          {showYearly && <p style={{ marginLeft: '-.4em' , fontSize: '.9em'}}>2 months free</p>}
         </Arcade>
         <Advanced imgUrl={advanced} className="advanced">
           <Title>Advanced</Title>
-          <Price id="advancedPrice">$12/mo</Price>
+          <Price>{showYearly ? "$90/year" : "$9/month"}</Price>
+          {showYearly && <p style={{ marginLeft: '-.4em', fontSize: '.9em'}}>2 months free</p>}
         </Advanced>
         <Pro imgUrl={pro} className="pro">
           <Title>Pro</Title>
-          <Price id="proPrice">$15/mo</Price>
+          <Price>{showYearly ? "$150/year" : "$15/month"}</Price>
+          {showYearly && <p style={{ marginLeft: '-.4em' , fontSize: '.9em'}}>2 months free</p>}
         </Pro>
       </Flex>
       <SwitchBar>
-        <Left id="left">Monthly</Left>
+        <Left id="left" color={showYearly}>Monthly</Left>
         <Switch onClick={handleClick}>
-          <Ball className="ball"></Ball>
+          <Ball className="ball" showYearly={showYearly}></Ball>
         </Switch>
-        <Right id="right">Yearly</Right>
+        <Right id="right" color={showYearly}>Yearly</Right>
       </SwitchBar>
       <GoBack>Go Back</GoBack>
       <Next>Next Step</Next>
@@ -133,28 +78,10 @@ const Arcade = styled.div`
     cursor: pointer;
     background-color: hsla(228, 100%, 84%, 0.1);
   }
-  #arcade-free {
-    margin-left: -0.5em;
-    margin-top: 10px;
-    font-size: 0.9em;
-    color:  hsl(243, 100%, 62%);
-  }
 `;
 const Advanced = styled(Arcade)`
-  #advanced-free {
-    margin-left: -0.5em;
-    margin-top: 10px;
-    font-size: 0.9em;
-    color:  hsl(243, 100%, 62%);
-  }
 `;
 const Pro = styled(Arcade)`
-  #pro-free {
-    margin-left: -0.5em;
-    margin-top: 10px;
-    font-size: 0.9em;
-    color:  hsl(243, 100%, 62%);
-  }
 `;
 const Flex = styled.div`
   display: flex;
@@ -171,7 +98,7 @@ const Price = styled.div`
 const Title = styled.div`
   margin-top: 14vh;
   margin-left: -1vh;
-  color:  hsl(243, 100%, 62%);
+  color: hsl(243, 100%, 62%);
 `;
 const SwitchBar = styled.div`
   // border: 1px solid blue;
@@ -189,7 +116,7 @@ const Left = styled.div`
   left: 9vw;
   width: fit-content;
   text-indent: 0;
-  color: hsl(213, 96%, 18%);
+  color: ${props => props.color ? "hsl(231, 11%, 63%)" : "hsl(213, 96%, 18%)" };
 `;
 const Right = styled.div`
   position: relative;
@@ -197,8 +124,7 @@ const Right = styled.div`
   left: 17vw;
   width: fit-content;
   text-indent: 0;
-  // color: hsl(213, 96%, 18%);
-  color: hsl(231, 11%, 63%);
+  color: ${props => props.color ? "hsl(213, 96%, 18%)" : "hsl(231, 11%, 63%)"};
 `;
 const Switch = styled.div`
   border: 1px solid black;
@@ -220,6 +146,8 @@ const Ball = styled.div`
   border-radius: 100%;
   border: 1px solid white;
   transition: all 0.275ms cubic-bezier(0.25, 0.46, 0.45, 0.8);
+  position: relative;
+  left:${props=>props.showYearly?'1.25em':'0'};
 `;
 const GoBack = styled.div`
   // border: 1px solid red;
