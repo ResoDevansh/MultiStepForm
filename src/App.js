@@ -3,9 +3,15 @@ import styled from "styled-components";
 import pic from "./assets/images/bg-sidebar-desktop.svg";
 import PersonalInfo from "./components/Personalnfo";
 import SelectYourPlan from "./components/SelectYourPlan";
+import MonthlyAddons from "./components/MonthlyAddons";
+import YearlyAddons from "./components/YearlyAddons";
 
 const App = () => {
   const [index, setIndex] = useState(1);
+  const [showYearly, setShowYearly] = useState(false);
+  const setYearly = (showYearly) => {
+    setShowYearly(!showYearly);
+  }
   const navitems = [
     {
       step: "Step 1",
@@ -54,7 +60,9 @@ const App = () => {
           case 1:
             return <PersonalInfo />;
           case 2:
-            return <SelectYourPlan />;
+            return <SelectYourPlan setPlanTime={setYearly} showYearly={showYearly} />;
+          case 3:
+            return !showYearly ?  <MonthlyAddons></MonthlyAddons> : <YearlyAddons></YearlyAddons>;
           default:
             return <PersonalInfo />;
         }

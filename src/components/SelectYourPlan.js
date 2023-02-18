@@ -4,10 +4,11 @@ import arcade from "../assets/images/icon-arcade.svg";
 import advanced from "../assets/images/icon-advanced.svg";
 import pro from "../assets/images/icon-pro.svg";
 
-const SelectYourPlan = (e) => {
-  const [showYearly, setYearly] = useState(false);
+const SelectYourPlan = ({setPlanTime,showYearly}) => {
+  // const [showYearly, setYearly] = useState(false);
   const handleClick = () => {
-    setYearly((yearly) => !yearly);
+    // setYearly((yearly) => !yearly);
+    setPlanTime(showYearly);
   };
   // e.preventDefault();
   return (
