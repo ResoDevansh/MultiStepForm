@@ -62,7 +62,7 @@ const App = () => {
           case 2:
             return <SelectYourPlan setPlanTime={setYearly} showYearly={showYearly} />;
           case 3:
-            return !showYearly ?  <MonthlyAddons></MonthlyAddons> : <YearlyAddons></YearlyAddons>;
+            return !showYearly ?  <MonthlyAddons showYearly={showYearly}></MonthlyAddons> : <YearlyAddons showYearly={showYearly}></YearlyAddons>;
           default:
             return <PersonalInfo />;
         }
