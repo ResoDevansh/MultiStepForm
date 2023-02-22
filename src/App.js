@@ -5,6 +5,7 @@ import PersonalInfo from "./components/Personalnfo";
 import SelectYourPlan from "./components/SelectYourPlan";
 import MonthlyAddons from "./components/MonthlyAddons";
 import YearlyAddons from "./components/YearlyAddons";
+import Summary from "./components/Summary";
 
 const App = () => {
   const [index, setIndex] = useState(1);
@@ -18,8 +19,8 @@ const App = () => {
   const setYearly = (showYearly) => {
     setShowYearly(!showYearly);
   };
-  console.log(clickedItems);
-
+  const [addons, setAddons] = useState(Array(3).fill(false));
+  // console.log(addons);
   const navitems = [
     {
       step: "Step 1",
@@ -74,10 +75,12 @@ const App = () => {
             );
           case 3:
             return !showYearly ? (
-              <MonthlyAddons showYearly={showYearly} plans={plans}></MonthlyAddons>
+              <MonthlyAddons selected={addons} setAddons={setAddons}></MonthlyAddons>
             ) : (
-              <YearlyAddons showYearly={showYearly} plans={plans}></YearlyAddons>
+              <YearlyAddons selected={addons} setAddons={setAddons}></YearlyAddons>
             );
+          case 4:
+            return <Summary clickedItems={clickedItems} addons={addons} showYearly={showYearly} />
           default:
             return <PersonalInfo />;
         }

@@ -1,7 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 
-const MonthlyAddons = () => {
+const MonthlyAddons = ({ selected ,setAddons}) => {
+  // console.log(selected);
+  const handleClick = (v) => {
+    let tempClicked = selected.slice();
+    if (tempClicked[v]) {
+      tempClicked[v] = false;
+    }
+    else tempClicked[v] = true;
+    setAddons(tempClicked);
+  }
   return (
     <Container>
       <Title>
@@ -9,7 +18,7 @@ const MonthlyAddons = () => {
       </Title>
       <Subtitle>Add-ons help enhance your gaming experience.</Subtitle>
       <Flex>
-        <FlexItem>
+        <FlexItem onClick={()=>handleClick(0)} >
           <input type="checkbox" id="online-service"></input>
           <div id="label">
             <div id="title">Online service</div>
@@ -17,7 +26,7 @@ const MonthlyAddons = () => {
             <div id="price">+$1/mo</div>
           </div>
         </FlexItem>
-        <FlexItem>
+        <FlexItem onClick={()=>handleClick(1)}>
           <input type="checkbox" id="larger-storage"></input>
           <div id="label">
             <div id="title">Larger storage</div>
@@ -25,7 +34,7 @@ const MonthlyAddons = () => {
             <div id="price">+$2/mo</div>
           </div>
         </FlexItem>
-        <FlexItem>
+        <FlexItem onClick={()=>handleClick(2)}>
           <input type="checkbox" id="customisable-profile"></input>
           <div id="label">
             <div id="title">Customizable Profile</div>
