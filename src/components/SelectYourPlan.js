@@ -5,29 +5,39 @@ import advanced from "../assets/images/icon-advanced.svg";
 import pro from "../assets/images/icon-pro.svg";
 
 
-const SelectYourPlan = ({setPlanTime,showYearly}) => {
+const SelectYourPlan = ({setPlanTime,showYearly,clickedItems,setClickedItems}) => {
   // const [showYearly, setYearly] = useState(false);
+  // console.log(clickedItems);
   const handleClick = () => {
     // setYearly((yearly) => !yearly);
     setPlanTime(showYearly);
   };
-  // e.preventDefault();
+  const clickCard = (v) => {
+    let tempClicked = clickedItems.slice();
+    for (let i = 0; i < 3; i++){
+      if (i !== v) {
+        tempClicked[i] = false;
+      }
+    }
+    tempClicked[v] = true;
+    setClickedItems(tempClicked);
+  }
   return (
     <Container>
       <h1> Select your plan</h1>
       <Subtitle>You have the option of monthly or yearly billing.</Subtitle>
       <Flex>
-        <Arcade imgUrl={arcade}>
+        <Arcade imgUrl={arcade} onClick={() => { clickCard(0) }} clicked={clickedItems[0]}>
           <Title>Arcade</Title>{" "}
           <Price>{showYearly ? "$90/year" : "$9/month"}</Price>
           {showYearly && <p style={{ marginLeft: '-.4em' , fontSize: '.9em'}}>2 months free</p>}
         </Arcade>
-        <Advanced imgUrl={advanced} className="advanced">
+        <Advanced imgUrl={advanced} className="advanced" onClick={() => { clickCard(1) }} clicked={clickedItems[1]}>
           <Title>Advanced</Title>
           <Price>{showYearly ? "$90/year" : "$9/month"}</Price>
           {showYearly && <p style={{ marginLeft: '-.4em', fontSize: '.9em'}}>2 months free</p>}
         </Advanced>
-        <Pro imgUrl={pro} className="pro">
+        <Pro imgUrl={pro} className="pro" onClick={() => { clickCard(2) }} clicked={clickedItems[2]}>
           <Title>Pro</Title>
           <Price>{showYearly ? "$150/year" : "$15/month"}</Price>
           {showYearly && <p style={{ marginLeft: '-.4em' , fontSize: '.9em'}}>2 months free</p>}
@@ -65,7 +75,7 @@ const Subtitle = styled.div`
 `;
 
 const Arcade = styled.div`
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: ${props=>props.clicked===false?'1px solid rgba(0, 0, 0, 0.2)':'1px solid rgba(0, 0, 0, 1)'};
   // color: hsl(228, 100%, 84%);
   flex-basis: 8vw;
   margin: 0vh 3vh;

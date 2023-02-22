@@ -9,9 +9,17 @@ import YearlyAddons from "./components/YearlyAddons";
 const App = () => {
   const [index, setIndex] = useState(1);
   const [showYearly, setShowYearly] = useState(false);
+  const [plans,setPlans] = useState([
+    { title: "arcade", price: 9 ,clicked: false},
+    { title: "advanced", price: 9,clicked: false },
+    { title: "pro", price: 15, clicked: false},
+  ]);
+  const [clickedItems,setClickedItems] = useState(Array(3).fill(false));
   const setYearly = (showYearly) => {
     setShowYearly(!showYearly);
-  }
+  };
+  console.log(clickedItems);
+
   const navitems = [
     {
       step: "Step 1",
@@ -60,9 +68,16 @@ const App = () => {
           case 1:
             return <PersonalInfo />;
           case 2:
-            return <SelectYourPlan setPlanTime={setYearly} showYearly={showYearly} />;
+            return (
+              <SelectYourPlan setPlanTime={setYearly} showYearly={showYearly} clickedItems={clickedItems} setClickedItems={setClickedItems} />
+                // plans={plans} setPlans={setPlansFunc} />
+            );
           case 3:
-            return !showYearly ?  <MonthlyAddons showYearly={showYearly}></MonthlyAddons> : <YearlyAddons showYearly={showYearly}></YearlyAddons>;
+            return !showYearly ? (
+              <MonthlyAddons showYearly={showYearly} plans={plans}></MonthlyAddons>
+            ) : (
+              <YearlyAddons showYearly={showYearly} plans={plans}></YearlyAddons>
+            );
           default:
             return <PersonalInfo />;
         }

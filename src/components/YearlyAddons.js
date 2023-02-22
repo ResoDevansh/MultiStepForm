@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const MonthlyAddons = () => {
+const YearlyAddons = ({showYearly,plans}) => {
   return (
     <Container>
       <Title>
@@ -130,4 +130,4 @@ const Next = styled.button`
     cursor: pointer;
   }
 `;
-export default MonthlyAddons;
+export default YearlyAddons;
