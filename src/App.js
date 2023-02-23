@@ -11,16 +11,16 @@ const App = () => {
   const [index, setIndex] = useState(1);
   const [showYearly, setShowYearly] = useState(false);
   const [plans,setPlans] = useState([
-    { title: "arcade", price: 9 ,clicked: false},
-    { title: "advanced", price: 9,clicked: false },
-    { title: "pro", price: 15, clicked: false},
+    { title: "Online service", price: '+$1/mo' ,clicked: false},
+    { title: "Larger storage", price: '+$2/mo',clicked: false },
+    { title: "Customizable Profile", price: '+$2/mo', clicked: false},
   ]);
   const [clickedItems,setClickedItems] = useState(Array(3).fill(false));
   const setYearly = (showYearly) => {
     setShowYearly(!showYearly);
   };
   const [addons, setAddons] = useState(Array(3).fill(false));
-  // console.log(addons);
+  console.log(addons);
   const navitems = [
     {
       step: "Step 1",
@@ -80,7 +80,7 @@ const App = () => {
               <YearlyAddons selected={addons} setAddons={setAddons}></YearlyAddons>
             );
           case 4:
-            return <Summary clickedItems={clickedItems} addons={addons} showYearly={showYearly} />
+            return <Summary clickedItems={clickedItems} addons={addons} showYearly={showYearly} plans={plans} />
           default:
             return <PersonalInfo />;
         }
