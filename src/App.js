@@ -20,7 +20,7 @@ const App = () => {
     setShowYearly(!showYearly);
   };
   const [addons, setAddons] = useState(Array(3).fill(false));
-  console.log(addons);
+  // console.log(addons);  
   const navitems = [
     {
       step: "Step 1",

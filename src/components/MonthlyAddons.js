@@ -11,7 +11,7 @@ const MonthlyAddons = ({ selected ,setAddons}) => {
     else tempClicked[v] = true;
     setAddons(tempClicked);
   }
-  // console.log(selected);
+  console.log(selected);
   return (
     <Container>
       <Title>

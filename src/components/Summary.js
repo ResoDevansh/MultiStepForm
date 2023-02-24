@@ -6,10 +6,41 @@ const Summary = ({ clickedItems, addons, showYearly, plans }) => {
   for (let i = 0; i < clickedItems.length; i++) {
     if (clickedItems[i] === true) key = i;
   }
+  const numberCalculator = (str) => {
+    let temp = "";
+    for (let i of str) {
+      if (i >= "0" && i <= "9") {
+        temp += i;
+      }
+    }
+    return parseInt(temp, 10);
+  };
   // let specialState = [Array(6).fill(false)];
   // if (key === 0 && showYearly === true) {
   //     specialState
   // }
+  let totalPrice = 0;
+  for (let i = 0; i < plans.length; i++) {
+    if (showYearly === false && plans[i].clicked === "true") {
+      totalPrice += numberCalculator(plans[i].price);
+    }
+  }
+  const priceCalculator = (str) => {
+    let cost = "";
+    for (let v of str) {
+      if (v >= "0" && v <= "9") {
+        cost += v;
+      }
+    }
+    cost += "0";
+    totalPrice += parseInt(cost, 10);
+    let temp = "$";
+    temp += cost;
+    temp += "/yr";
+    cost = temp;
+    // return parseInt(cost, 10);
+    return cost;
+  };
   for (let i = 0; i < addons.length; i++) {
     if (addons[i]) {
       plans[i].clicked = "true";
@@ -24,25 +55,32 @@ const Summary = ({ clickedItems, addons, showYearly, plans }) => {
   if (showYearly === true) {
     if (key === 0) {
       price = "$90/yr";
+      totalPrice += 90;
     }
     if (key === 1) {
       price = "$120/yr";
+      totalPrice += 120;
     }
     if (key === 2) {
       price = "$150/yr";
+      totalPrice += 150;
     }
   } else {
     if (key === 0) {
-      price = "$9/month";
+      price = "$9/mo";
+      totalPrice += 9;
     }
     if (key === 1) {
-      price = "$12/month";
+      price = "$12/mo";
+      totalPrice += 12;
     }
     if (key === 2) {
-      price = "$15/month";
+      price = "$15/mo";
+      totalPrice += 15;
     }
   }
   // console.log(clickedItems);
+  // totalPrice += price;
   return (
     <Container>
       <Header> Finishing up</Header>
@@ -71,14 +109,24 @@ const Summary = ({ clickedItems, addons, showYearly, plans }) => {
           {plans.map((plan, key) => {
             if (plan.clicked === "true")
               return (
-                <div key={key}>
+                <div key={key} className="feature">
                   <div className="title">{plan.title}</div>
-                  <div className="prices">{plan.price}</div>
+                  <div className="prices">
+                    {showYearly === false
+                      ? plan.price
+                      : priceCalculator(plan.price)}
+                  </div>
                 </div>
               );
           })}
         </EachFeature>
       </Content>
+      <div className="totalPrice">
+        <div id="first">Total(per month)</div>
+        <div id="second">
+          {showYearly ? `$${totalPrice}/yr` : `$${totalPrice}/mo`}
+        </div>
+      </div>
     </Container>
   );
 };
@@ -91,6 +139,21 @@ const Container = styled.div`
   text-indent: 20%;
   h1 {
     margin-left: -18%;
+  }
+  .totalPrice {
+    margin-top: 1.5em;
+  }
+  #first {
+    border: 1px solid red;
+    display: inline-block;
+    width: fit-content;
+    text-indent: 0;
+    margin-left: -1.8em;
+  }
+  #second {
+    display: inline-block;
+    border: 2px solid red;
+    margin-left: 15em;
   }
 `;
 const Subtitle = styled.div`
@@ -112,6 +175,8 @@ const Content = styled.div`
   //   border: 1px solid blue;
   margin-top: 3vh;
   margin-left: 4vw;
+  padding-bottom: 0.5em;
+  padding-top: 0.2em;
   background-color: hsla(206, 94%, 87%, 0.12);
   width: 25vw;
 `;
@@ -130,7 +195,7 @@ const PlanCost = styled.div`
   //   border: 2px solid yellow;
   display: inline-block;
   position: relative;
-  left: 12.5vw;
+  left: 11.5vw;
   top: -1vh;
   font-size: 0.9em;
   font-weight: bolder;
@@ -149,21 +214,30 @@ const Line = styled.div`
 `;
 const EachFeature = styled.div`
   // border: 2px solid red;
-  font-size: .9em;
-    .title{
-      // border: 1px solid red;
-      width: fit-content;  
-      text-indent: 0;
-      position: relative;
-      left: -4.5em;
-      display: inline-block;
-    }
-    .prices {
-      // border: 1px solid red;
-      width: fit-content;
-      position: absolute;
-      right: 6.5em;
-      display: inline-block;
-    }
+  font-size: 0.9em;
+  // margin-bottom: 2em;
+  .title {
+    // border: 1px solid red;
+    width: fit-content;
+    text-indent: 0;
+    position: relative;
+    left: -4.5em;
+    display: inline-block;
+    color: hsl(231, 11%, 63%);
+  }
+  .prices {
+    // border: 1px solid red;
+    width: fit-content;
+    position: absolute;
+    right: 7em;
+    font-weight: 800;
+    font-size: 0.9em;
+    display: inline-block;
+    color: hsl(213, 96%, 18%);
+  }
+  .feature {
+    margin-bottom: 1.5em;
+    font-size: 1.05em;
+  }
 `;
 export default Summary;

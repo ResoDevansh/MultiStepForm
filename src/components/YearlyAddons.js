@@ -1,7 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 
-const YearlyAddons = ({showYearly,plans}) => {
+const YearlyAddons = ({ selected ,setAddons}) => {
+  const handleClick = (v) => {
+    let tempClicked = selected.slice();
+    if (tempClicked[v]) {
+      tempClicked[v] = false;
+    }
+    else tempClicked[v] = true;
+    setAddons(tempClicked);
+  }
+  console.log(selected);
   return (
     <Container>
       <Title>
@@ -9,7 +18,7 @@ const YearlyAddons = ({showYearly,plans}) => {
       </Title>
       <Subtitle>Add-ons help enhance your gaming experience.</Subtitle>
       <Flex>
-        <FlexItem>
+        <FlexItem onClick={()=>handleClick(0)}>
           <input type="checkbox" id="online-service"></input>
           <div id="label">
             <div id="title">Online service</div>
@@ -17,7 +26,7 @@ const YearlyAddons = ({showYearly,plans}) => {
             <div id="price">+$10/yr</div>
           </div>
         </FlexItem>
-        <FlexItem>
+        <FlexItem onClick={()=>handleClick(1)}>
           <input type="checkbox" id="larger-storage"></input>
           <div id="label">
             <div id="title">Larger storage</div>
@@ -25,7 +34,7 @@ const YearlyAddons = ({showYearly,plans}) => {
             <div id="price">+$20/yr</div>
           </div>
         </FlexItem>
-        <FlexItem>
+        <FlexItem onClick={()=>handleClick(2)}>
           <input type="checkbox" id="customisable-profile"></input>
           <div id="label">
             <div id="title">Customizable Profile</div>
