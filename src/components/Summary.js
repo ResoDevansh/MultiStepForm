@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-const Summary = ({ clickedItems, addons, showYearly, plans }) => {
+const Summary = ({ clickedItems, addons, showYearly, plans ,finished,setFinished}) => {
   let key, price;
+  console.log(finished);
   for (let i = 0; i < clickedItems.length; i++) {
     if (clickedItems[i] === true) key = i;
   }
@@ -127,6 +128,8 @@ const Summary = ({ clickedItems, addons, showYearly, plans }) => {
           {showYearly ? `$${totalPrice}/yr` : `$${totalPrice}/mo`}
         </div>
       </div>
+      <div className="footbar"><GoBack>Go Back</GoBack>
+      <Next onClick={()=>setFinished(!finished)}>Confirm</Next></div>
     </Container>
   );
 };
@@ -144,16 +147,20 @@ const Container = styled.div`
     margin-top: 1.5em;
   }
   #first {
-    border: 1px solid red;
+    // border: 1px solid red;
     display: inline-block;
     width: fit-content;
     text-indent: 0;
     margin-left: -1.8em;
+    color: hsl(231, 11%, 63%);
   }
   #second {
     display: inline-block;
-    border: 2px solid red;
-    margin-left: 15em;
+    // border: 2px solid red;
+    margin-left: 7.6em;
+    font-size: 1.3em;
+    font-weight: 900;
+    color: hsl(243, 100%, 62%);
   }
 `;
 const Subtitle = styled.div`
@@ -229,7 +236,7 @@ const EachFeature = styled.div`
     // border: 1px solid red;
     width: fit-content;
     position: absolute;
-    right: 7em;
+    right: 8.5em;
     font-weight: 800;
     font-size: 0.9em;
     display: inline-block;
@@ -238,6 +245,33 @@ const EachFeature = styled.div`
   .feature {
     margin-bottom: 1.5em;
     font-size: 1.05em;
+  }
+`;
+const GoBack = styled.div`
+  margin-top: 15vh;
+  margin-left: 3vw;
+  width: 5em;
+  color: hsl(231, 11%, 63%);
+  font-weight: 500;
+  &:hover {
+    color: hsl(213, 96%, 18%);
+    cursor: pointer;
+    font-weight: 900;
+  }
+`;
+const Next = styled.button`
+  margin-left: 21vw;
+  position: relative;
+  top: -2.5em;
+  padding: 1em;
+  width: 7vw;
+  text-align: center;
+  border-radius: 0.5em;
+  font-weight: 400;
+  background-color: hsl(213, 96%, 18%);
+  color: white;
+  &:hover {
+    cursor: pointer;
   }
 `;
 export default Summary;

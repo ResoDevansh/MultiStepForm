@@ -6,9 +6,11 @@ import SelectYourPlan from "./components/SelectYourPlan";
 import MonthlyAddons from "./components/MonthlyAddons";
 import YearlyAddons from "./components/YearlyAddons";
 import Summary from "./components/Summary";
+import End from "./components/End";
 
 const App = () => {
   const [index, setIndex] = useState(1);
+  const [finished, setFinished] = useState(false);
   const [showYearly, setShowYearly] = useState(false);
   const [plans,setPlans] = useState([
     { title: "Online service", price: '+$1/mo' ,clicked: false},
@@ -80,7 +82,7 @@ const App = () => {
               <YearlyAddons selected={addons} setAddons={setAddons}></YearlyAddons>
             );
           case 4:
-            return <Summary clickedItems={clickedItems} addons={addons} showYearly={showYearly} plans={plans} />
+            return (!finished ? <Summary clickedItems={clickedItems} addons={addons} showYearly={showYearly} plans={plans} finished={finished} setFinished={setFinished} /> : <End />);
           default:
             return <PersonalInfo />;
         }
